@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  helm-test:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-03-04T14:15:03.461189346+01:00"
+    description: A Helm chart for Kubernetes
+    digest: 544d7ea39860bdeab3b23c3f673e98cf814612655a744dcfbacefa0bd59a9cf1
+    name: helm-test
+    type: application
+    urls:
+    - https://henrywedge.github.io/kafka-helm-chart/helm-test-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-03-04T14:15:03.460739635+01:00"
