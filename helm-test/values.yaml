@@ -1,4 +1,4 @@
-name: "nameOfApp"
+name: "kafka-deployment"
 namespace: "kafka"
 
 superUsers: []
