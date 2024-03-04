@@ -1,0 +1,194 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  name: {{ .Values.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  entityOperator:
+    userOperator:
+      watchedNamespace: 'kafka'
+      reconciliationIntervalSeconds: 30
+      logging:
+        type: 'inline'
+        loggers: {{ .Values.loggers }}
+      resources:
+        requests:
+          cpu: {{ .Values.resources.cpu.request }}
+          memory: {{ .Values.resources.memory.request }}
+        limits:
+          cpu: {{ .Values.resources.cpu.limit }}
+          memory: {{ .Values.resources.memory.limit }}
+  kafka:
+    {{ if .Values.distributeWideOnNodes }}
+    template:
+      pod:
+        affinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 75,
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: 'strimzi.io/name'
+                      operator: 'In'
+                      values:
+                       - 'kafka'
+                topologyKey: {{ .Values.topologyKey }}
+            - weight: 50,
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: 'strimzi.io/name'
+                      operator: 'In'
+                      values:
+                        - 'zookeeper'
+                topologyKey: {{ .Values.topologyKey }}
+    {{- end}}
+    logging:
+      type: 'inline',
+      loggers: {{ .Values.topologyKey }}
+    authorization:
+      superUsers: {{ .Values.superUsers }}
+      type: 'simple',
+    config: {{ .Values.brokerConfig }},
+    jvmOptions: # Kafka broker does never require more than 4 to 6 GB heap
+    # Minimal and maximal heap size should be identical to have explainable resources
+    # Heap size must not exceed the memory of the pod
+    #calculateHeapSize(availableMemory=kafkaSizing.memory, maximumHeapSize=4) +
+    #TODO set heap size
+    {
+      "-XX": {
+        UseG1GC: true,
+        MaxGCPauseMillis: 20,
+        InitiatingHeapOccupancyPercent: 35, #
+        G1HeapRegionSize: '16M',
+        MinMetaspaceFreeRatio: 50,
+        MaxMetaspaceFreeRatio: 80,
+        ExplicitGCInvokesConcurrent: true,
+      },
+      "-D": "javax.net.debug=ssl"
+    },
+    listeners: [
+      { authentication: {
+        type: 'tls'
+      },
+        name: 'tls',
+        port: 9092,
+        tls: true,
+        type: 'internal'
+      },
+      {
+        name: 'plain2',
+        port: 9093,
+        tls: false,
+        type: 'internal',
+      },
+    ],
+    replicas: {{ .Values.broker.replicas }},
+    resources: {
+      requests: {
+        cpu: {{ .Values.resources.cpu.request }},
+        memory: {{ .Values.resources.memory.request }},
+      },
+      limits: {
+        cpu: {{ .Values.resources.cpu.limit }},
+        memory: {{ .Values.resources.memory.limit }},
+      }
+    },
+    storage: {
+      type: 'jbod',
+      volumes: [
+        {
+          class: {{ .Values.storageClass }},
+          deleteClaim: true,
+          id: 0,
+          size: {{ .Values.resources.disk }},
+          type: 'persistent-claim',
+        },
+      ],
+    },
+    metricsConfig: {
+      type: 'jmxPrometheusExporter',
+      valueFrom: {
+        configMapKeyRef: {
+          name: 'kafka-metrics-config',
+          key: 'kafka-metrics-config.yml',
+        },
+      },
+    },
+  zookeeper:
+{{ if .Values.distributeWideOnNodes }}
+    template:
+      pod:
+        affinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 75
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: 'strimzi.io/name'
+                      operator: 'In'
+                      values:
+                        - 'kafka'
+                topologyKey: {{ .Values.topologyKey }}
+            - weight: 50
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: 'strimzi.io/name'
+                      operator: 'In'
+                      values:
+                        - 'zookeeper'
+                topologyKey: {{ .Values.topologyKey }}
+{{- end}},
+    config:
+      "autopurge.snapRetainCount": 10
+      "autopurge.purgeInterval": 24
+    logging:
+      type: 'inline'
+      loggers: {{ .Values.loggers }}
+    #jvmOptions: calculateHeapSize(zookeeperSizing.memory, 1)
+    replicas: {{ .Values.zookeeper.replicas }},
+    resources:
+      requests:
+        cpu: {{ .Values.resources.cpu.request }}
+        memory: {{ .Values.resources.memory.request }}
+      limits: {
+        cpu: {{ .Values.resources.cpu.limit }}
+        memory: {{ .Values.resources.memory.limit }}
+    storage:
+      class: {{ .Values.storageClass }}
+      deleteClaim: true
+      size: {{ .Values.resources.disk }}
+      type: 'persistent-claim'
+    metricsConfig:
+      type: 'jmxPrometheusExporter'
+      valueFrom:
+        configMapKeyRef:
+          name: 'kafka-metrics-config'
+          key: 'zookeeper-metrics-config.yml'
+  kafkaExporter:
+    groupRegex: '.*'
+    topicRegex: '.*'
+    groupExcludeRegex: '^excluded-.*'
+    topicExcludeRegex: '^excluded-.*'
+    resources:
+      requests:
+        cpu: '200m'
+        memory: '64Mi'
+      limits:
+        cpu: '500m'
+        memory: '128Mi'
+    logging: 'debug'
+    enableSaramaLogging: true
+    template:
+      pod:
+        securityContext:
+          runAsUser: 1000001
+          fsGroup: 0
+        terminationGracePeriodSeconds: 120
+    readinessProbe:
+      initialDelaySeconds: 15
+      timeoutSeconds: 5
+    livenessProbe:
+      initialDelaySeconds: 15
+      timeoutSeconds: 5
