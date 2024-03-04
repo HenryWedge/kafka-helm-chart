@@ -24,7 +24,7 @@ spec:
       pod:
         affinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 75,
+            - weight: 75
               podAffinityTerm:
                 labelSelector:
                   matchExpressions:
@@ -33,7 +33,7 @@ spec:
                       values:
                        - 'kafka'
                 topologyKey: {{ .Values.topologyKey }}
-            - weight: 50,
+            - weight: 50
               podAffinityTerm:
                 labelSelector:
                   matchExpressions:
@@ -124,7 +124,7 @@ spec:
                       values:
                         - 'zookeeper'
                 topologyKey: {{ .Values.topologyKey }}
-{{- end}},
+{{- end}}
     config:
       "autopurge.snapRetainCount": 10
       "autopurge.purgeInterval": 24
@@ -132,7 +132,7 @@ spec:
       type: 'inline'
       loggers: {{ .Values.loggers }}
     #jvmOptions: calculateHeapSize(zookeeperSizing.memory, 1)
-    replicas: {{ .Values.zookeeper.replicas }},
+    replicas: {{ .Values.zookeeper.replicas }}
     resources:
       requests:
         cpu: {{ .Values.resources.cpu.request }}
