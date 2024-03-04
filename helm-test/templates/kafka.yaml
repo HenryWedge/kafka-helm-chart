@@ -10,7 +10,10 @@ spec:
       reconciliationIntervalSeconds: 30
       logging:
         type: 'inline'
-        loggers: {{ .Values.loggers }}
+        loggers:
+          {{ range $key, $value := .Values.loggers }}
+          "{{ $key }}": '{{ $value }}'
+          {{ end }}
       resources:
         requests:
           cpu: {{ .Values.resources.cpu.request }}
@@ -31,7 +34,7 @@ spec:
                     - key: 'strimzi.io/name'
                       operator: 'In'
                       values:
-                       - 'kafka'
+                        - 'kafka'
                 topologyKey: {{ .Values.topologyKey }}
             - weight: 50
               podAffinityTerm:
@@ -45,11 +48,17 @@ spec:
 {{ end }}
     logging:
       type: 'inline'
-      loggers: {{ .Values.topologyKey }}
+      loggers:
+        {{ range $key, $value := .Values.loggers }}
+        "{{ $key }}": '{{ $value }}'
+        {{ end }}
     authorization:
       superUsers: {{ .Values.superUsers }}
       type: 'simple'
-    config: {{ .Values.brokerConfig }}
+    config:
+      {{ range $key, $value := .Values.brokerConfig }}
+      "{{ $key }}": '{{ $value }}'
+      {{ end }}
     jvmOptions: # Kafka broker does never require more than 4 to 6 GB heap
     # Minimal and maximal heap size should be identical to have explainable resources
     # Heap size must not exceed the memory of the pod
@@ -130,7 +139,10 @@ spec:
       "autopurge.purgeInterval": 24
     logging:
       type: 'inline'
-      loggers: {{ .Values.loggers }}
+      loggers:
+        {{ range $key, $value := .Values.loggers }}
+        "{{ $key }}": '{{ $value }}'
+        {{ end }}
     #jvmOptions: calculateHeapSize(zookeeperSizing.memory, 1)
     replicas: {{ .Values.zookeeper.replicas }}
     resources:

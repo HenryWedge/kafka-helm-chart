@@ -25,8 +25,8 @@ storageClass:
   "ceph-rbd"
 
 loggers:
-  log4j.appender.CONSOLE: 'org.apache.log4j.ConsoleAppender'
-  log4j.appender.CONSOLE.layout: 'net.logstash.log4j.JSONEventLayoutV1'
+  "log4j.appender.CONSOLE": 'org.apache.log4j.ConsoleAppender'
+  "log4j.appender.CONSOLE.layout": 'net.logstash.log4j.JSONEventLayoutV1'
 
 brokerConfig:
   auto.create.topics.enable: false
