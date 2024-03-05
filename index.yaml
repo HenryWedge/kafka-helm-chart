@@ -9,6 +9,6 @@ entries:
     name: helm-test
     type: application
     urls:
-    - https://henrywedge.github.io/kafka-helm-chart/helm-test-0.1.7.tgz
-    version: 0.1.7
+    - https://henrywedge.github.io/kafka-helm-chart/helm-test-0.1.8.tgz
+    version: 0.1.8
 generated: "2024-03-04T14:15:03.460739635+01:00"

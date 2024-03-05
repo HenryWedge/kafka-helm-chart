@@ -45,7 +45,7 @@ brokerConfig:
   log.cleaner.threads: 2 #8sLib.threadCount(cpuSizingdesiredCountPerCpu=2)
   log.cleaner.io.buffer.size: "2048000" #8sLib.evalBytes(2048 'kiB')
   log.cleaner.min.cleanable.ratio: 0.2
-  log.retention.ms:  #8sLib.evalTimeToMs(8 'w')
+  log.retention.ms: "4838400000" #8sLib.evalTimeToMs(8 'w')
   min.compaction.lag.ms: "28800000" #8sLib.evalTimeToMs(8 'h')
   max.compaction.lag.ms: "604800000" #8sLib.evalTimeToMs(7 'd')
   num.network.threads: 3 #8sLib.threadCount(cpuSizingdesiredCountPerCpu=3)

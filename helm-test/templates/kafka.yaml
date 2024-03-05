@@ -57,7 +57,7 @@ spec:
       type: 'simple'
     config:
       {{ range $key, $value := .Values.brokerConfig }}
-      "{{ $key }}": '{{ int $value }}'
+      "{{ $key }}": '{{ $value }}'
       {{ end }}
     jvmOptions: # Kafka broker does never require more than 4 to 6 GB heap
     # Minimal and maximal heap size should be identical to have explainable resources
