@@ -34,26 +34,26 @@ brokerConfig:
   default.replication.factor: 3
   min.insync.replicas: 2
   offsets.topic.replication.factor: 3
-  transaction.state.log.segment.bytes: 16000000 #8sLib.k8sLib.evalBytes(16 'MiB')
+  transaction.state.log.segment.bytes: "16000000" #8sLib.k8sLib.evalBytes(16 'MiB')
   transaction.state.log.replication.factor: 3
   transaction.state.log.min.isr: 2
   num.replica.fetchers: 3
-  replica.socket.receive.buffer.bytes: 256000 #8sLib.evalBytes(256 'kiB')
-  replica.fetch.response.max.bytes: 2000000 #8sLib.evalBytes(2 'MiB')
-  log.segment.bytes: 64000000 #8sLib.evalBytes(64 'MiB')
-  log.roll.ms: 14400000 #8sLib.evalTimeToMs(4 'h')
+  replica.socket.receive.buffer.bytes: "256000" #8sLib.evalBytes(256 'kiB')
+  replica.fetch.response.max.bytes: "2000000" #8sLib.evalBytes(2 'MiB')
+  log.segment.bytes: "64000000" #8sLib.evalBytes(64 'MiB')
+  log.roll.ms: "14400000" #8sLib.evalTimeToMs(4 'h')
   log.cleaner.threads: 2 #8sLib.threadCount(cpuSizingdesiredCountPerCpu=2)
-  log.cleaner.io.buffer.size: 2048000 #8sLib.evalBytes(2048 'kiB')
+  log.cleaner.io.buffer.size: "2048000" #8sLib.evalBytes(2048 'kiB')
   log.cleaner.min.cleanable.ratio: 0.2
   log.retention.ms:  #8sLib.evalTimeToMs(8 'w')
-  min.compaction.lag.ms: 28800000 #8sLib.evalTimeToMs(8 'h')
-  max.compaction.lag.ms: 604800000 #8sLib.evalTimeToMs(7 'd')
+  min.compaction.lag.ms: "28800000" #8sLib.evalTimeToMs(8 'h')
+  max.compaction.lag.ms: "604800000" #8sLib.evalTimeToMs(7 'd')
   num.network.threads: 3 #8sLib.threadCount(cpuSizingdesiredCountPerCpu=3)
   num.io.threads: 2 #8sLib.threadCount(cpuSizingdesiredCountPerCpu=2)
-  message.max.bytes: 2000000 #8sLib.evalBytes(2 'MiB')
-  socket.request.max.bytes: 400000000 #8sLib.evalBytes(400 'MiB')
-  socket.send.buffer.bytes: 400000 #8sLib.evalBytes(400 'kiB')
-  socket.receive.buffer.bytes: 400000 #8sLib.evalBytes(400 'kiB')
+  message.max.bytes: "2000000" #8sLib.evalBytes(2 'MiB')
+  socket.request.max.bytes: "400000000" #8sLib.evalBytes(400 'MiB')
+  socket.send.buffer.bytes: "400000" #8sLib.evalBytes(400 'kiB')
+  socket.receive.buffer.bytes: "400000" #8sLib.evalBytes(400 'kiB')
   num.recovery.threads.per.data.dir: 1 #8sLib.threadCount(cpuSizingdesiredCountPerCpu=1)
   group.initial.rebalance.delay.ms: 10000 #k8sLib.evalTimeToMs(10 's')
   compression.type: 'producer'
