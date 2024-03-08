@@ -1,0 +1,15 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: admin-kafka-user
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: kafka
+spec:
+  authentication:
+    type: tls
+  template:
+    secret:
+      metadata:
+        annotations:
+          kubed.appscode.com/sync: kubernetes.io/metadata.name=kafka
