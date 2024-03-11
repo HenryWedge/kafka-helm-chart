@@ -5,21 +5,24 @@ superUsers: []
 distributeWideOnNodes: true
 topologyKey: 'kubernetes.io/hostname'
 
-#TODO separate for zookeeper and broker
-resources:
-  cpu:
-    request: 1
-    limit: 1
-  memory:
-    request: 1Gi
-    limit: 1Gi
-  disk: 2Gi
+entityOperator:
+  requests:
+    cpu: 100m
+    memory: 100Mi
 
 broker:
   replicas: 3
+  requests:
+    cpu: 500m
+    memory: 1Gi
+    disk: 2Gi
 
 zookeeper:
   replicas: 3
+  requests:
+    cpu: 500m
+    memory: 1Gi
+    disk: 2Gi
 
 storageClass:
   "ceph-rbd"

@@ -16,11 +16,11 @@ spec:
           {{ end }}
       resources:
         requests:
-          cpu: {{ .Values.resources.cpu.request }}
-          memory: {{ .Values.resources.memory.request }}
+          cpu: {{ .Values.entityOperator.requests.cpu }}
+          memory: {{ .Values.entityOperator.requests.memory }}
         limits:
-          cpu: {{ .Values.resources.cpu.limit }}
-          memory: {{ .Values.resources.memory.limit }}
+          cpu: {{ .Values.entityOperator.requests.cpu }}
+          memory: {{ .Values.entityOperator.requests.memory }}
   kafka:
 {{ if .Values.distributeWideOnNodes }}
     template:
@@ -90,18 +90,18 @@ spec:
     replicas: {{ .Values.broker.replicas }}
     resources:
       requests:
-        cpu: {{ .Values.resources.cpu.request }}
-        memory: {{ .Values.resources.memory.request }}
+        cpu: {{ .Values.broker.requests.cpu }}
+        memory: {{ .Values.broker.requests.memory }}
       limits:
-        cpu: {{ .Values.resources.cpu.limit }}
-        memory: {{ .Values.resources.memory.limit }}
+        cpu: {{ .Values.broker.requests.cpu }}
+        memory: {{ .Values.broker.requests.memory }}
     storage:
       type: 'jbod'
       volumes:
         - class: {{ .Values.storageClass }}
           deleteClaim: true
           id: 0
-          size: {{ .Values.resources.disk }}
+          size: {{ .Values.broker.requests.disk }}
           type: 'persistent-claim'
     metricsConfig:
       type: 'jmxPrometheusExporter'
@@ -147,15 +147,15 @@ spec:
     replicas: {{ .Values.zookeeper.replicas }}
     resources:
       requests:
-        cpu: {{ .Values.resources.cpu.request }}
-        memory: {{ .Values.resources.memory.request }}
+        cpu: {{ .Values.zookeeper.requests.cpu }}
+        memory: {{ .Values.zookeeper.requests.memory }}
       limits:
-        cpu: {{ .Values.resources.cpu.limit }}
-        memory: {{ .Values.resources.memory.limit }}
+        cpu: {{ .Values.zookeeper.requests.cpu }}
+        memory: {{ .Values.zookeeper.requests.memory }}
     storage:
       class: {{ .Values.storageClass }}
       deleteClaim: true
-      size: {{ .Values.resources.disk }}
+      size: {{ .Values.zookeeper.requests.disk }}
       type: 'persistent-claim'
     metricsConfig:
       type: 'jmxPrometheusExporter'
