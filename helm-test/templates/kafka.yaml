@@ -97,9 +97,10 @@ spec:
           bootstrap:
             host: <bootstrapHost>
           brokers:
+          {{ $hostname := .Values.hostname }}
           {{ range $i := until (int .Values.broker.replicas) }}
             - broker: {{ $i }}
-              host: broker-{{ $i }}.{{ .Values.hostname }}
+              host: broker-{{ $i }}.{{ $hostname }}
           {{ end }}
           class: {{ .Values.ingressClassName }}
     replicas: {{ .Values.broker.replicas }}
