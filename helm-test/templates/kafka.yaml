@@ -90,19 +90,18 @@ spec:
       - name: 'external'
         tls: true
         port: 9094
-        type: ingress
+        type: nodeport
         authentication:
           type: tls
         configuration:
           bootstrap:
-            host: <bootstrapHost>
+            host: bootstrap.{{ .Values.hostname }}
           brokers:
           {{ $hostname := .Values.hostname }}
           {{ range $i := until (int .Values.broker.replicas) }}
             - broker: {{ $i }}
               host: broker-{{ $i }}.{{ $hostname }}
           {{ end }}
-          class: {{ .Values.ingressClassName }}
     replicas: {{ .Values.broker.replicas }}
     resources:
       requests:

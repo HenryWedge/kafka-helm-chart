@@ -27,8 +27,6 @@ zookeeper:
 storageClass:
   "ceph-rbd"
 
-ingressClassName: "nginx"
-
 hostname: "example.com"
 
 loggers:
