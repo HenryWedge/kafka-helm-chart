@@ -3,7 +3,17 @@ entries:
   helm-test:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-03-12T16:09:41.768766281+01:00"
+    created: "2024-03-12T16:16:46.91544244+01:00"
+    description: A Helm chart for Kubernetes
+    digest: b696dc425825fb5f3eb1531334f0ad98035ac7720a24df8cc0ca8138e9f9f923
+    name: helm-test
+    type: application
+    urls:
+    - https://henrywedge.github.io/kafka-helm-chart/helm-test-0.1.14.tgz
+    version: 0.1.14
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-03-12T16:16:46.91506893+01:00"
     description: A Helm chart for Kubernetes
     digest: 548108145976c99640855edcfef752b62dc8fcc459a2156c508f9f588b20d9dc
     name: helm-test
@@ -13,7 +23,7 @@ entries:
     version: 0.1.13
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-03-12T16:09:41.768164481+01:00"
+    created: "2024-03-12T16:16:46.91465972+01:00"
     description: A Helm chart for Kubernetes
     digest: 86f08d7203f509752cb2a6b4311f448b952fb4bef18752c6f4ba4104eb0eb377
     name: helm-test
@@ -23,7 +33,7 @@ entries:
     version: 0.1.12
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-03-12T16:09:41.76780688+01:00"
+    created: "2024-03-12T16:16:46.914238309+01:00"
     description: A Helm chart for Kubernetes
     digest: a2ac551b09737f33af2f85c81b50cc98ebd71f68d295f0dcd0284eb0165a676d
     name: helm-test
@@ -33,7 +43,7 @@ entries:
     version: 0.1.11
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-03-12T16:09:41.76742848+01:00"
+    created: "2024-03-12T16:16:46.913710495+01:00"
     description: A Helm chart for Kubernetes
     digest: 556a28a4e0680effc5f2c747649a807f6b5da0ed4fd3428fa701070bbf7f7e34
     name: helm-test
@@ -41,4 +51,4 @@ entries:
     urls:
     - https://henrywedge.github.io/kafka-helm-chart/helm-test-0.1.10.tgz
     version: 0.1.10
-generated: "2024-03-12T16:09:41.76697888+01:00"
+generated: "2024-03-12T16:16:46.913215883+01:00"
