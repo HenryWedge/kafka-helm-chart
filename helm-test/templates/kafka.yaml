@@ -83,10 +83,25 @@ spec:
         port: 9092
         tls: true
         type: 'internal'
-      - name: 'plain2'
+      - name: 'plain'
         port: 9093
         tls: false
         type: 'internal'
+      - name: 'external'
+        tls: true
+        port: 9094
+        type: ingress
+        authentication:
+          type: tls
+        configuration:
+          bootstrap:
+            host: <bootstrapHost>
+          brokers:
+          {{ range $i := .Values.broker.replicas }}
+            - broker: {{ $i }}
+              host: broker-{{ $i }}.{{ .Values.hostname }}
+          {{ end }}
+          class: {{ .Values.ingressClassName }}
     replicas: {{ .Values.broker.replicas }}
     resources:
       requests:
