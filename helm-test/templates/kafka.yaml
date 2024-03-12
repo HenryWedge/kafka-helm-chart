@@ -97,9 +97,9 @@ spec:
           bootstrap:
             host: <bootstrapHost>
           brokers:
-          {{ range $i := .Values.broker.replicas }}
-            - broker: {{ $i }}
-              host: broker-{{ $i }}.{{ .Values.hostname }}
+          {{ range (untilStep 0 (int .Values.kafka.replicas) 1) }}
+            - broker: {{ . }}
+              host: broker-{{ . }}.{{ .Values.hostname }}
           {{ end }}
           class: {{ .Values.ingressClassName }}
     replicas: {{ .Values.broker.replicas }}
